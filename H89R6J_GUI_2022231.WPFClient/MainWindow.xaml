@@ -10,28 +10,44 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding Characters}" SelectedItem="{Binding SelectedCharacter}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Label Content="{Binding Name}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <StackPanel Grid.Column="1">
-            
-            <Label Content="Name" Background="LightBlue" Padding="10"/>
-            <TextBox Text="{Binding SelectedCharacter.Name}" Padding="10" Margin="0,0,0,30"/>
-            
-            <Button Content="Create Character" Command="{Binding CreateCharacterCommand}"
+        <TabControl>
+            <TabItem Header="Characters">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox ItemsSource="{Binding Characters}" SelectedItem="{Binding SelectedCharacter}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Column="1">
+
+                        <Label Content="Name" Background="LightBlue" Padding="10"/>
+                        <TextBox Text="{Binding SelectedCharacter.Name}" Padding="10" Margin="0,0,0,30"/>
+
+                        <Button Content="Create Character" Command="{Binding CreateCharacterCommand}"
                     Margin="10" Padding="10"/>
-            <Button Content="Delete Character" Command="{Binding DeleteCharacterCommand}"
+                        <Button Content="Delete Character" Command="{Binding DeleteCharacterCommand}"
                     Margin="10" Padding="10"/>
-            <Button Content="Update Character" Command="{Binding UpdateCharacterCommand}"
+                        <Button Content="Update Character" Command="{Binding UpdateCharacterCommand}"
                     Margin="10" Padding="10"/>
-        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Weapons">
+                <Grid>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Artifacts">
+                <Grid>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
