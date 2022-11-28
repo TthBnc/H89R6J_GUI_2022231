@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:H89R6J_GUI_2022231.WPFClient"
         mc:Ignorable="d"
-        Title="Character Editor" Height="450" Width="800">
+        Title="Genshin thingy | Sponsored by Gergely Tóvizi" Height="450" Width="800">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
@@ -42,14 +42,76 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
+            
+            
+            
+            
+            
             <TabItem Header="Weapons">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox ItemsSource="{Binding Weapons}" SelectedItem="{Binding SelectedWeapon}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Column="1">
 
+                        <Label Content="Name" Background="LightBlue" Padding="10"/>
+                        <TextBox Text="{Binding SelectedWeapon.Name}" Padding="10" />
+
+                        <Label Content="PeakDmg" Background="LightBlue" Padding="10"/>
+                        <TextBox Text="{Binding SelectedWeapon.PeakDmg}" Padding="10" Margin="0,0,0,30"/>
+
+
+                        <Button Content="Create Weapon" Command="{Binding CreateWeaponCommand}"
+                            Margin="10" Padding="10"/>
+                        <Button Content="Delete Weapon" Command="{Binding DeleteWeaponCommand}"
+                            Margin="10" Padding="10"/>
+                        <Button Content="Update Weapon" Command="{Binding UpdateWeaponCommand}"
+                            Margin="10" Padding="10"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
+            
+            
+            
+            
+            
             <TabItem Header="Artifacts">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox ItemsSource="{Binding Artifacts}" SelectedItem="{Binding SelectedArtifact}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Column="1">
 
+                        <Label Content="Name" Background="LightBlue" Padding="10"/>
+                        <TextBox Text="{Binding SelectedArtifact.Name}" Padding="10" />
+
+                        <Label Content="Cost" Background="LightBlue" Padding="10"/>
+                        <TextBox Text="{Binding SelectedArtifact.Cost}" Padding="10" Margin="0,0,0,30"/>
+
+
+                        <Button Content="Create Artifact" Command="{Binding CreateArtifactCommand}"
+                            Margin="10" Padding="10"/>
+                        <Button Content="Delete Artifact" Command="{Binding DeleteArtifactCommand}"
+                            Margin="10" Padding="10"/>
+                        <Button Content="Update Artifact" Command="{Binding UpdateArtifactCommand}"
+                            Margin="10" Padding="10"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>

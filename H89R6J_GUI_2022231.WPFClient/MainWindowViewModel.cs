@@ -69,7 +69,8 @@ namespace H89R6J_GUI_2022231.WPFClient
                         Id = value.Id,
                         Name = value.Name,
                         PeakDmg = value.PeakDmg,
-                        CharacterId = value.CharacterId
+                        CharacterId = value.CharacterId,
+                        Character = value.Character
 
                     };
                     OnPropertyChanged();
@@ -103,7 +104,8 @@ namespace H89R6J_GUI_2022231.WPFClient
                         Id = value.Id,
                         Name = value.Name,
                         Cost = value.Cost,
-                        CharacterId = value.CharacterId
+                        CharacterId = value.CharacterId,
+                        Character = value.Character
                     };
                     OnPropertyChanged();
                     (DeleteArtifactCommand as RelayCommand).NotifyCanExecuteChanged();
@@ -129,7 +131,7 @@ namespace H89R6J_GUI_2022231.WPFClient
             {
                 Characters = new RestCollection<Character>("http://localhost:8160/", "character", "hub");
                 Weapons = new RestCollection<Weapon>("http://localhost:8160/", "weapon", "hub");
-                Artifacts = new RestCollection<Artifact>("http://localhost:8160/", "artifacts", "hub");
+                Artifacts = new RestCollection<Artifact>("http://localhost:8160/", "artifact", "hub");
 
 
                 #region Character Commands
@@ -161,7 +163,8 @@ namespace H89R6J_GUI_2022231.WPFClient
                         {
                             Name = SelectedWeapon.Name,
                             PeakDmg = SelectedWeapon.PeakDmg,
-                            CharacterId = SelectedWeapon.CharacterId
+                            CharacterId = SelectedWeapon.CharacterId,
+                            Character = SelectedWeapon.Character
                         });
                     });
 
@@ -183,7 +186,8 @@ namespace H89R6J_GUI_2022231.WPFClient
                         {
                             Name = SelectedArtifact.Name,
                             Cost = SelectedArtifact.Cost,
-                            CharacterId = SelectedArtifact.CharacterId
+                            CharacterId = SelectedArtifact.CharacterId,
+                            Character = SelectedArtifact.Character
                         });
                     });
 
