@@ -27,7 +27,11 @@
                     <StackPanel Grid.Column="1">
 
                         <Label Content="Name" Background="LightBlue" Padding="10"/>
-                        <TextBox Text="{Binding SelectedCharacter.Name}" Padding="10" Margin="0,0,0,30"/>
+                        <TextBox Text="{Binding SelectedCharacter.Name}" Padding="10" />
+
+                        <Label Content="Element" Background="LightBlue" Padding="10"/>
+                        <TextBox Text="{Binding SelectedCharacter.Element}" Padding="10" Margin="0,0,0,30"/>
+
 
                         <Button Content="Create Character" Command="{Binding CreateCharacterCommand}"
                     Margin="10" Padding="10"/>
