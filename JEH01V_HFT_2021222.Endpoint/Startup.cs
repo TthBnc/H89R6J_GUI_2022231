@@ -76,7 +76,7 @@ namespace JEH01V_HFT_2021222.Endpoint
                 .AllowCredentials()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .WithOrigins("http://localhost:14552"));
+                .WithOrigins("http://localhost:28196"));
 
             app.UseRouting();
 

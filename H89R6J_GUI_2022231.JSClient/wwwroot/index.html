@@ -2,11 +2,35 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Character UI</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    <h1>Character Catalog</h1>
 
+    <div id="formdiv">
+        <label>Character Name</label>
+        <input type="text" id="characterName" />
+
+        <label>Character Element</label>
+        <input type="text" id="characterElement" />
+        <button type="button" onclick="createChar()">Add Character</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Element</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="resultarea">
+            <tr>
+            </tr>
+        </tbody>
+    </table>
 
     <script src="script.js"></script>
 </body>
