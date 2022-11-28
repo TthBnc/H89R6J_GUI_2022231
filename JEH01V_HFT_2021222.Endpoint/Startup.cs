@@ -1,3 +1,4 @@
+using JEH01V_HFT_2021222.Endpoint.Services;
 using JEH01V_HFT_2021222.Logic.Classes;
 using JEH01V_HFT_2021222.Logic.Interfaces;
 using JEH01V_HFT_2021222.Models;
@@ -43,6 +44,8 @@ namespace JEH01V_HFT_2021222.Endpoint
             services.AddTransient<IArtifactLogic, ArtifactLogic>();
             services.AddTransient<IWeaponLogic, WeaponLogic>();
 
+            services.AddSignalR();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -82,6 +85,7 @@ namespace JEH01V_HFT_2021222.Endpoint
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalRHub>("/hub");
             });
         }
     }
