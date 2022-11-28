@@ -1,4 +1,5 @@
-﻿using JEH01V_HFT_2021222.Logic.Interfaces;
+﻿using JEH01V_HFT_2021222.Endpoint.Services;
+using JEH01V_HFT_2021222.Logic.Interfaces;
 using JEH01V_HFT_2021222.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -11,11 +12,13 @@ namespace JEH01V_HFT_2021222.Endpoint.Controllers
     [ApiController]
     public class ArtifactController : ControllerBase
     {
-        IArtifactLogic aLogic; 
+        IArtifactLogic aLogic;
+        IHubContext<SignalRHub> hub;
 
-        public ArtifactController(IArtifactLogic aLogic)
+        public ArtifactController(IArtifactLogic aLogic, IHubContext<SignalRHub> hub)
         {
             this.aLogic = aLogic;
+            this.hub = hub;
         }
 
         [HttpGet]
@@ -34,18 +37,22 @@ namespace JEH01V_HFT_2021222.Endpoint.Controllers
         public void Create([FromBody] Artifact value)
         {
             aLogic.Create(value);
+            this.hub.Clients.All.SendAsync("ArtifactCreated", value);
         }
 
         [HttpPut]
         public void Update([FromBody] Artifact value)
         {
             aLogic.Update(value);
+            this.hub.Clients.All.SendAsync("ArtifactUpdated", value);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var aToDelete = aLogic.Read(id);
             aLogic.Delete(id);
+            this.hub.Clients.All.SendAsync("ArtifactDeleted", aToDelete);
         }
 
         [HttpGet("HighestCostArtifactUser")]

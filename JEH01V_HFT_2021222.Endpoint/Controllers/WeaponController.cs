@@ -1,4 +1,5 @@
-﻿using JEH01V_HFT_2021222.Logic.Interfaces;
+﻿using JEH01V_HFT_2021222.Endpoint.Services;
+using JEH01V_HFT_2021222.Logic.Interfaces;
 using JEH01V_HFT_2021222.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -12,10 +13,12 @@ namespace JEH01V_HFT_2021222.Endpoint.Controllers
     public class WeaponController : ControllerBase
     {
         IWeaponLogic wLogic;
+        IHubContext<SignalRHub> hub;
 
-        public WeaponController(IWeaponLogic wLogic)
+        public WeaponController(IWeaponLogic wLogic, IHubContext<SignalRHub> hub)
         {
             this.wLogic = wLogic;
+            this.hub = hub;
         }
 
         [HttpGet]
@@ -34,18 +37,22 @@ namespace JEH01V_HFT_2021222.Endpoint.Controllers
         public void Create([FromBody] Weapon value)
         {
             wLogic.Create(value);
+            this.hub.Clients.All.SendAsync("WeaponCreated", value);
         }
 
         [HttpPut]
         public void Update([FromBody] Weapon value)
         {
             wLogic.Update(value);
+            this.hub.Clients.All.SendAsync("WeaponUpdated", value);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var wToDelete = wLogic.Read(id);
             wLogic.Delete(id);
+            this.hub.Clients.All.SendAsync("WeaponDeleted", wToDelete);
         }
 
         [HttpGet("HighestDMGWeaponUser")]
