@@ -1,14 +1,49 @@
 ﻿let characters = [];
+let connection = null;
 
 getCharData()
+setupSignalR()
 
+function setupSignalR() {
+    connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:8160/hub")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    connection.on("CharacterCreated", (user, message) => {
+        //console.log(user);
+        //console.log(message);
+        getCharData();
+    });
+
+    connection.on("CharacterDeleted", (user, message) => {
+        //console.log(user);
+        //console.log(message);
+        getCharData();
+    });
+
+    connection.onclose(async () => {
+            await start();
+        });
+    start();
+}
+
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
 
 async function getCharData() {
     await fetch('http://localhost:8160/character')
         .then(x => x.json())
         .then(y => {
             characters = y;
-            console.log(characters);
+            //console.log(characters);
             displayChar();
         });
 }
