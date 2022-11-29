@@ -1,6 +1,9 @@
 ﻿let characters = [];
 let connection = null;
 
+let charIdToUpdate = -1;
+
+
 getCharData()
 setupSignalR()
 
@@ -17,6 +20,12 @@ function setupSignalR() {
     });
 
     connection.on("CharacterDeleted", (user, message) => {
+        //console.log(user);
+        //console.log(message);
+        getCharData();
+    });
+
+    connection.on("CharacterUpdated", (user, message) => {
         //console.log(user);
         //console.log(message);
         getCharData();
@@ -53,11 +62,13 @@ function displayChar() {
 
     characters.forEach(t => {
         document.getElementById('resultarea').innerHTML +=
-            "<tr><td>" +
+            "<tr><td> " +
             t.id + "</td><td>" +
             t.name + "</td><td>" +
             t.element + "</td><td>" +
-            `<button type="button" onclick="removeChar(${t.id})">Delete</button>`+ "</td></tr>";
+        `<button type="button" onclick="removeChar(${t.id})">Delete</button>` +
+        `<button type="button" onclick="showUpdateChar(${t.id})">Update</button>` +
+             "</td></tr>";
         console.log(t.name);
     })
 }
@@ -95,6 +106,45 @@ function removeChar(id) {
             'Content-Type': 'application/json',
         },
         body: null
+    })
+        .then(response => response)
+        .then(data => {
+            console.log('Success:', data);
+            getCharData();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+function showUpdateChar(id) {
+    let tname = document.getElementById('characterNameUpdate').value = characters
+        .find(t => t['id'] == id)['name'];
+    let telement = document.getElementById('characterElementUpdate').value = characters
+        .find(t => t['id'] == id)['element'];
+
+    document.getElementById('updateformdiv').style.display = 'flex';
+
+    charIdToUpdate = id;
+}
+
+function updateChar() {
+    document.getElementById('updateformdiv').style.display = 'none';
+
+    let tname = document.getElementById('characterNameUpdate').value;
+    let telement = document.getElementById('characterElementUpdate').value;
+
+    fetch('http://localhost:8160/character', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+            {
+                id: charIdToUpdate,
+                name: tname,
+                element: telement
+            }),
     })
         .then(response => response)
         .then(data => {
